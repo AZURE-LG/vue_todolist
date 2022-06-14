@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="todoapp">
-    <todo-header @addTaskFn="add"></todo-header>
+    <todo-header :list="list" @addTaskFn="add"></todo-header>
     <todo-main :list="showList" @delTaskFn="del"></todo-main>
     <todo-footer
       :list="showList"
@@ -19,11 +19,12 @@ export default {
   components: { TodoFooter, TodoMain, TodoHeader },
   data() {
     return {
-      list: [
-        { id: 100, name: "吃饭", isDone: true },
-        { id: 101, name: "睡觉", isDone: false },
-        { id: 10, name: "打豆豆", isDone: true },
-      ],
+      list: JSON.parse(localStorage.getItem("list")),
+      // list: [
+      //   { id: 100, name: "吃饭", isDone: true },
+      //   { id: 101, name: "睡觉", isDone: false },
+      //   { id: 10, name: "打豆豆", isDone: true },
+      // ],
       i: 0,
     };
   },
@@ -59,6 +60,14 @@ export default {
           return this.list.filter((item) => item.isDone);
           break;
       }
+    },
+  },
+  watch: {
+    list: {
+      deep: true,
+      handler(newVal) {
+        localStorage.setItem("list", JSON.stringify(newVal));
+      },
     },
   },
 };

@@ -63,6 +63,16 @@
   8.3 在 App.vue 中 找到  <todo-footer @clearFn="clear"></todo-footer>
   8.4 在 App.vue 中  定义函数 clear 过滤出 未完成 覆盖 this.list 数组
 
+9. 数据缓存
+  9.1 在 App.vue 文件中 使用 watch 对 list 数据进行侦听 开启深度侦听 将最新的数据 存储到 本地存储中 一定 转换为  json格式的字符串
+  9.2 在 App.vue 文件中 取数据时 先从 本地存储中将数据取出来 如果没有数据就需要给一个空的数组
+
+10. 全选影响小选
+  10.1 在 App.vue 文件中 找到 <todo-header :list="list"></todo-header> 将 list数组 传递给子组件
+  10.2 在 TodoHeader.vue 文件中 使用 props:['list'] 接收父组件传递过来的数据
+  10.3 在 TodoHeader.vue 文件中 复选框身上 设置  v-model="isAll" isAll 是计算属性 要求是完整写法 把 isAll 写成对象的形式
+  10.4 在 TodoHeader.vue 定义 计算属性 isAll  在 set(val) 函数里面  使用  this.list.forEach(item => item.isDone = val)
+
 # vue-toodlist
 
 ## Project setup

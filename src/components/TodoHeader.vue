@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <h1>todos</h1>
-    <input id="toggle-all" class="toggle-all" type="checkbox" />
+    <input id="toggle-all" class="toggle-all" type="checkbox" v-model="isAll" />
     <label for="toggle-all"></label>
     <input
       class="new-todo"
@@ -15,10 +15,24 @@
 
 <script>
 export default {
+  props: ["list"],
   data() {
     return {
       taskName: "",
     };
+  },
+  computed: {
+    isAll: {
+      set(val) {
+        // console.log(val);
+        // 更改父组件的数据，复杂数据类型
+        this.list.forEach((item) => (item.isDone = val));
+      },
+      get() {
+        if (this.list.length === 0) return false;
+        return this.list.every((item) => item.isDone);
+      },
+    },
   },
   methods: {
     addTask() {
